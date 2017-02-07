@@ -1,0 +1,6 @@
+# Common
+out/
+*.iml
+
+# IDE related
+.idea/
