@@ -1,4 +1,4 @@
-package math;
+package com.math;
 
 /**
  * Created by winston.xie on 27/10/2016 AD.
