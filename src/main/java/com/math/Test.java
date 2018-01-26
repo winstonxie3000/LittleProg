@@ -16,9 +16,9 @@ public class Test {
 
         System.out.println(Runtime.getRuntime().freeMemory());
 
-        while (i < 2000) {
+        while (i < 20) {
             executorService.submit(() -> {
-                Fibonacci.fibonacci(5000000);
+                Fibonacci.fibonacci(50000);
             });
             i++;
             try {
