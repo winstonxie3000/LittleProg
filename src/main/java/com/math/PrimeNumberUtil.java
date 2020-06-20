@@ -1,45 +1,79 @@
 package com.math;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PrimeNumberUtil {
 
     private static List<String> primeNumbers = new ArrayList<>();
+    private static String fileName = "primeNumberFile";
 
-    public static List<String> generate(int num) {
+    public static void generate() {
 
         primeNumbers.add("3");
         int number = 0;
-        String primeNumber;
+        String primeNumber, upperlimit;
         boolean isPrimeNumber;
+        String primeNumberBuffer = "3\n";
 
         primeNumber = primeNumbers.get(primeNumbers.size()-1);
-        while (number < num) {
+        while (true) {
             isPrimeNumber = true;
             primeNumber = StringCalUtil.plus(primeNumber, "2");
             for (int i = 0; isPrimeNumber && i < primeNumbers.size(); i++) {
                 boolean isExactDivide = StringCalUtil.isExactDivide(primeNumber, primeNumbers.get(i));
                 if (isExactDivide) {
                     isPrimeNumber = false;
+                } else {
+                    upperlimit = StringCalUtil.getQuotient(primeNumber, primeNumbers.get(i)) + 1;
+                    if (StringCalUtil.lessThan(upperlimit, primeNumbers.get(i))) {
+                        isPrimeNumber = true;
+                        break;
+                    }
                 }
             }
             if (isPrimeNumber) {
                 primeNumbers.add(primeNumber);
-                System.out.println(primeNumber);
+                primeNumberBuffer+=primeNumber+"\n";
+                System.out.println(number+":"+primeNumber);
                 number++;
+                if (number%1000 == 0) {
+                    try {
+                        FileOutputStream stream = new FileOutputStream(fileName+"_"+number/1000000+".txt", true);
+                        FileChannel channel = stream.getChannel();
+                        byte[] strBytes = primeNumberBuffer.getBytes();
+                        ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
+                        buffer.put(strBytes);
+                        buffer.flip();
+                        channel.write(buffer);
+                        stream.close();
+                        channel.close();
+                        primeNumberBuffer = "";
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-        return null;
     }
 
     public static void test() {
-        String t = "199";
-        int i = 0;
-        while (i < 100) {
-            t = StringCalUtil.plus(t, "2");
-            System.out.println(t);
-            i++;
-        }
+        String primeNumberBuffer = "test\n";
+        String primeNumber = "Hello";
+        primeNumberBuffer+=primeNumber+"\nWorld";
+        System.out.println(primeNumberBuffer);
+    }
+
+    public static void main(String[] args) {
+        String primeNumberBuffer = "test\n";
+        String primeNumber = "Hello";
+        primeNumberBuffer+=primeNumber+"\nWorld";
+        System.out.println(primeNumberBuffer);
+        System.out.println(17/123);
+
     }
 }

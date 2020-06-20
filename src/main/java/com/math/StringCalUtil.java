@@ -168,15 +168,36 @@ public class StringCalUtil {
 
         String result = a1;
 
+        if (a2.equals("0")) return "1";
+
+        String indexTimes = a2;
+        String remainder;
+
+        if (lessThan("3",indexTimes) || equal("2", indexTimes)) {
+            indexTimes = getQuotient(a2,"2");
+            remainder = getRemainder(a2,"2");
+            result = index(multiple(a1, a1), indexTimes);
+            result = multiple(result, index(a1, remainder));
+        } else if (equal("3", indexTimes)) {
+            return multiple(multiple(result, result), result);
+        } else if(equal("1",indexTimes)) {
+            return result;
+        }
+
+        return result;
+
+    }
+
+    public static String index2(String a1, String a2) {
+
         String indexTimes = "1";
+        String result = a1;
 
         while (lessThan(indexTimes, a2)) {
             result = multiple(result, a1);
             indexTimes = plus(indexTimes, "1");
         }
-
         return result;
-
     }
 
     /**
@@ -220,6 +241,18 @@ public class StringCalUtil {
         return result.get(1).equals("0");
     }
 
+    public static String getQuotient(String numerator, String denominator) {
+
+        List<String> result = divide(numerator, denominator);
+        return result.get(0);
+    }
+
+    public static String getRemainder(String numerator, String denominator) {
+
+        List<String> result = divide(numerator, denominator);
+        return result.get(1);
+    }
+
     public static List<String> divide(String numerator, String denominator) {
 
         int l1 = numerator.length();
@@ -250,6 +283,7 @@ public class StringCalUtil {
         for (int i = index; i < s.size(); i++) {
             quotient += String.valueOf(s.get(i));
         }
+        quotient = trimFirstZeros(quotient);
         result.add(quotient);
         result.add(remainder);
 
@@ -343,13 +377,9 @@ public class StringCalUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(index("2","77232917"));
 
-        System.out.println("abcdefg".substring(0,3));
+        long current = System.currentTimeMillis();
+        System.out.println(index("2","19999")+", it takes " + (System.currentTimeMillis()-current) + " ms");
 
-        String str = "00000";
-        System.out.println(trimFirstZeros(str));
-
-        System.out.println(Math.abs(1-4));
     }
 }
