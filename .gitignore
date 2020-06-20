@@ -1,6 +1,7 @@
 # Common
 out/
 *.iml
+target/
 
 # IDE related
 .idea/
