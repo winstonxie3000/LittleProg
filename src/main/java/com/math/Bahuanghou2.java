@@ -1,8 +1,8 @@
 package com.math;
 
-public class Bahuanghou {
+public class Bahuanghou2 {
 
-    public static int[] list = new int[8]; // just change the array size to XX to calculate XX-HuangHou issue
+    public static int[] list = new int[7]; // just change the array size to XX to calculate XX-HuangHou issue
 
     public static long cnt = 0;
 
@@ -47,9 +47,14 @@ public class Bahuanghou {
 
     private static boolean isAvailable(int[] list) {
         for (int i = 0; i < list.length; i++) {
-            for (int j = i + 1; j < list.length; j++) {
-                if (list[i] == list[j]) return false;
-                if ((j-i) == Math.abs(list[j]-list[i])) return false;
+            for (int j = 0; j < list.length; j++) {
+                for (int k = 0; k < list.length; k++) {
+                    if (i != j && j != k && i != k) {
+                        if (list[i] == list[j] && list[j] == list[k]) return false;
+                        if (((j-i) == Math.abs(list[j]-list[i]))
+                            &&((k-i) == Math.abs(list[k]-list[i]))) return false;
+                    }
+                }
             }
         }
         return true;
